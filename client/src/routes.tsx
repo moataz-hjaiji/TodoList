@@ -27,11 +27,7 @@ export const renderRoutes = (routes: CustomRouteProps[] = []) => (
             element={
               <Guard>
                 <Layout>
-                  {route.routes ? (
-                    renderRoutes(route.routes)
-                  ) : (
-                    <Component />
-                  )}
+                  {route.routes ? renderRoutes(route.routes) : <Component />}
                 </Layout>
               </Guard>
             }
@@ -92,6 +88,15 @@ const routes = [
     path: '/login',
     exact: true,
     component: lazy(() => import('./pages/Auth/Login')),
+  },
+  {
+    path: '/404NOTFOUND',
+    exact: true,
+    component: lazy(() => import('./pages/NOTFOUND')),
+  },
+  {
+    path: '*',
+    component: lazy(() => import('./pages/NOTFOUND')),
   },
 ];
 export default routes;

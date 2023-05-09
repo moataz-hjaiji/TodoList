@@ -1,27 +1,25 @@
 import Tasks from '../Model/tasks';
 import User, { userModel } from '../Model/user';
 interface createUser {
-  name:String,
-  email:String,
-  password?:String,
+  firstName: String;
+  lastName: String;
+  email: String;
+  password?: String;
 }
 export default class UserRepo {
   public static async findById(id: String): Promise<User | null> {
     return await userModel.findById(id);
   }
-  public static async createUser(user:createUser){
-    const newUser = await  userModel.create({
-      ...user
-    })
-    return newUser
+  public static async createUser(user: createUser) {
+    const newUser = await userModel.create({
+      ...user,
+    });
+    return newUser;
   }
-  public static async findByObj(obj: {
-    email:String,
-
-  }): Promise<User | null> {
+  public static async findByObj(obj: { email: String }): Promise<User | null> {
     return await userModel.findOne(obj);
   }
-  public static async findUserTasks(id: String): Promise<Tasks[]|undefined> {
+  public static async findUserTasks(id: String): Promise<Tasks[] | undefined> {
     const user = await userModel.findById(id);
     return user?.tasks;
   }

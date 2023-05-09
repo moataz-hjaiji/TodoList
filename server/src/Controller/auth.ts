@@ -10,17 +10,18 @@ interface Request extends ExpressRequest {
   user?: userModel;
 }
 export const signup = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  const { firstName, lastName, email, password, passwordConfirm } = req.body;
+  if (!firstName || !email || !password || !lastName || !passwordConfirm) {
     res.status(400).json({
       status: 'failed',
-      message: 'Please provide name ,  email and password!',
+      message: 'Please provide firstName ,  email and password!',
     });
   }
   const salt = await bcrypt.genSalt();
   const passwordHash = await bcrypt.hash(password, salt);
   const newUser = await UserRepo.createUser({
-    name,
+    firstName,
+    lastName,
     email,
     password: passwordHash,
   });
@@ -28,9 +29,7 @@ export const signup = asyncHandler(async (req, res) => {
   res.status(201).json({
     status: 'success',
     token,
-    data: {
-      user: newUser,
-    },
+    data: newUser,
   });
 });
 export const login = asyncHandler(async (req: Request, res: Response) => {
@@ -60,6 +59,6 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({
     status: 'success',
     token,
-    data: { user: user },
+    data: user,
   });
 });
