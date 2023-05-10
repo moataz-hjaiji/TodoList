@@ -1,0 +1,32 @@
+.form-input {
+  background-color: #ececec;
+  display: flex;
+  padding: 15px 27px;
+  border-radius: 8px;
+  gap: 28px;
+  .icon-container {
+    display: flex;
+    align-items: center;
+    img {
+      height: 29px;
+    }
+  }
+  .label-input {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-weight: 400;
+      font-size: 12px;
+    }
+    input {
+      outline: none;
+    }
+  }
+}
+@media only screen and (max-width: 465px) {
+  .form-input {
+    .icon-container {
+      display: none;
+    }
+  }
+}

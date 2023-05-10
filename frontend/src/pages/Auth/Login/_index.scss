@@ -1,0 +1,47 @@
+.Login-page {
+  background: #e5e5e5;
+  height: 100%;
+  display: flex;
+  .img-login {
+    background-image: url('./../../../assets/img/Desktop-login.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-height: 90%;
+    }
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .img-login {
+    width: 40% !important;
+  }
+  .form-login-container {
+    width: 60% !important;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .img-login {
+    display: none !important;
+  }
+  .form-login-container {
+    //padding-top: 5rem !important;
+    width: 100% !important;
+    .form-login {
+      height: fit-content !important;
+      padding: 35px;
+    }
+  }
+}
+@media screen and (max-width: 470px) {
+  .form-login {
+    padding: 20px !important ;
+    white-space: break-spaces;
+  }
+}

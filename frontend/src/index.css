@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    color: #2f2f2f;
+  }
+
+  input,
+  textarea,
+  button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
+  }
+}
