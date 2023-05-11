@@ -28,3 +28,7 @@
     list-style: none;
   }
 }
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}

@@ -1,10 +1,10 @@
-import React, { createContext, useEffect, useReducer, ReactNode } from "react";
-import jwtDecode from "jwt-decode";
-import { PayloadAction } from "@reduxjs/toolkit";
+import React, { createContext, useEffect, useReducer, ReactNode } from 'react';
+import jwtDecode from 'jwt-decode';
+import { PayloadAction } from '@reduxjs/toolkit';
 
-import { JWTState, User, DecodedToken, LoginPromise } from "../types/contexts";
-import axios from "../utils/axios";
-import Loading from "../components/Loading";
+import { JWTState, User, DecodedToken, LoginPromise } from '../types/contexts';
+import axios from '../utils/axios';
+import Loading from '../components/Loading';
 
 const initialAuthState: JWTState = {
   isAuthenticated: false,
@@ -25,17 +25,17 @@ const isValidToken = (token: string): boolean => {
 
 const setSession = (token: string | null) => {
   if (token) {
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   } else {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     delete axios.defaults.headers.common.Authorization;
   }
 };
 
 const reducer = (state: JWTState, action: PayloadAction<JWTState>) => {
   switch (action.type) {
-    case "INITIALISE": {
+    case 'INITIALISE': {
       const { isAuthenticated, user } = action.payload;
 
       return {
@@ -45,7 +45,7 @@ const reducer = (state: JWTState, action: PayloadAction<JWTState>) => {
         user,
       };
     }
-    case "LOGIN": {
+    case 'LOGIN': {
       const { user } = action.payload;
       return {
         ...state,
@@ -53,7 +53,7 @@ const reducer = (state: JWTState, action: PayloadAction<JWTState>) => {
         user,
       };
     }
-    case "REGISTER": {
+    case 'REGISTER': {
       const { user } = action.payload;
 
       return {
@@ -62,7 +62,7 @@ const reducer = (state: JWTState, action: PayloadAction<JWTState>) => {
         user,
       };
     }
-    case "LOGOUT": {
+    case 'LOGOUT': {
       return {
         ...state,
         isAuthenticated: false,
@@ -77,13 +77,15 @@ const reducer = (state: JWTState, action: PayloadAction<JWTState>) => {
 
 const AuthContext = createContext({
   ...initialAuthState,
-  method: "JWT",
+  method: 'JWT',
   login: (email: string, password: string) => Promise.resolve(),
-  register: (firstName: string,
+  register: (
+    firstName: string,
     lastName: string,
     email: string,
     password: string,
-    passwordConfirm: string) => Promise.resolve(),
+    passwordConfirm: string
+  ) => Promise.resolve(),
   logout: () => {},
 });
 
@@ -91,15 +93,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialAuthState);
 
   const login = async (email: string, password: string) => {
-    const response = await axios.post("/login", {
+    const response = await axios.post('http://127.0.0.1:8000/api/v1/login', {
       email,
       password,
     });
-    const user = response.data.data.filtredUser;
-    const token = response.data.data.tokens.accessToken
+    const user = response.data;
+    const token = response.token;
     setSession(token);
     dispatch({
-      type: "LOGIN",
+      type: 'LOGIN',
       payload: {
         user,
       },
@@ -113,17 +115,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     password: string,
     passwordConfirm: string
   ) => {
-    const response = await axios.post("/register", {
-      name,
+    const response = await axios.post('http://127.0.0.1:8000/api/v1/signup', {
+      firstName,
       lastName,
       email,
       password,
       passwordConfirm,
     });
-    const { token, user } = response.data.data;
+    const user = response.data;
+    const token = response.token;
     setSession(token);
     dispatch({
-      type: "REGISTER",
+      type: 'REGISTER',
       payload: { user },
     });
   };
@@ -132,21 +135,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setSession(null);
     // @ts-ignore
     // TODO: useReducer with typescript !!!
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: 'LOGOUT' });
   };
 
   useEffect(() => {
     const initialise = async () => {
       try {
-        const token = window.localStorage.getItem("token");
+        const token = window.localStorage.getItem('token');
 
         if (token && isValidToken(token)) {
           setSession(token);
-          const response = await axios.get("/profile/my");
+          const response = await axios.get('/profile/my');
           const user = response.data.data;
 
           dispatch({
-            type: "INITIALISE",
+            type: 'INITIALISE',
             payload: {
               isAuthenticated: true,
               user,
@@ -154,7 +157,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           });
         } else {
           dispatch({
-            type: "INITIALISE",
+            type: 'INITIALISE',
             payload: {
               isAuthenticated: false,
               user: null,
@@ -164,7 +167,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } catch (err) {
         console.error(err);
         dispatch({
-          type: "INITIALISE",
+          type: 'INITIALISE',
           payload: {
             isAuthenticated: false,
             user: null,
@@ -187,7 +190,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         method: 'JWT',
         logout,
         login,
-        register
+        register,
       }}
     >
       {children}
@@ -196,4 +199,3 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export default AuthContext;
-

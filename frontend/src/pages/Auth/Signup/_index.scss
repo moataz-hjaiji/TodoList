@@ -1,0 +1,33 @@
+.signup-page {
+  display: flex;
+  height: 100%;
+  .img-signup {
+    background-image: url('./../../../assets/img/signup-page.jpg');
+    width: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .signup-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    padding-top: 35px;
+    .signup-title {
+      font-weight: 600;
+      font-size: 29.566px;
+      color: #0b4654;
+    }
+  }
+}
+@media only screen and (max-width: 735px) {
+  .signup-page {
+    .img-signup {
+      display: none;
+    }
+    .signup-form-container {
+      width: 100%;
+    }
+  }
+}

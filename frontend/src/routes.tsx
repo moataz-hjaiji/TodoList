@@ -55,9 +55,14 @@ export const routes = [
   {
     exact: true,
     path: '/login',
+    guard: GuestGuard,
     component: lazy(() => import('./pages/Auth/Login')),
   },
-
+  {
+    exact: true,
+    path: '/signup',
+    component: lazy(() => import('./pages/Auth/Signup')),
+  },
   // {
   //   path: '*',
   //   guard: GuestGuard,

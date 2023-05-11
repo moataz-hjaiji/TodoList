@@ -1,0 +1,14 @@
+.sign-form {
+  gap: 20px;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  .submit {
+    background: #6358dc;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 25px;
+  }
+}

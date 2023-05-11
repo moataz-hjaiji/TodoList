@@ -3,7 +3,6 @@ import Main from './layouts/Main';
 import { AuthProvider } from './contexts/JWTAuthContext';
 
 function App() {
-  console.log(routes);
   return (
     <AuthProvider>
       <Main>{renderRoutes(routes as CustomRouteProps[])}</Main>

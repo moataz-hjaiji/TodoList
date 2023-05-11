@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import './_index.scss';
 
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 
 import Input from './../Input';
 import emailIcon from './../../../assets/icon/email.svg';
@@ -15,21 +16,24 @@ interface IUserCredential {
 }
 
 const index = () => {
-  const { userCredential, setUserCredential }:any = useState({
-    email: '',
-    password: '',
-  });
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const { setSession } = useAuth();
-  const handleSubmit = async () => {
-    const { token, data } = await axios.post(
-      'http://127.0.0.1:8000/api/v1/login',
-      {}
-    );
-  };
+  useEffect(() => {
+    if (isAuthenticated) navigate('/');
+  }, [isAuthenticated]);
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: (values) => {
+      login(values.email, values.password);
+    },
+  });
+
   return (
     <div className="form-login-container">
-      <form className="form-login" onSubmit={handleSubmit}>
+      <form className="form-login" onSubmit={formik.handleSubmit}>
         <h1 className="form-login-title">
           Welcome to <span>TodoList</span>
         </h1>
@@ -39,6 +43,9 @@ const index = () => {
             name="email"
             label="Email"
             icon={emailIcon}
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            error={formik.errors.email}
           />
           <Input
             placeholder="Please enter your password"
@@ -46,6 +53,9 @@ const index = () => {
             type="password"
             label="password"
             icon={keyIcon}
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            error={formik.errors.password}
           />
         </div>
         <div className="remember-forget-password">
