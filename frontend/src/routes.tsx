@@ -2,6 +2,7 @@ import React, { Suspense, Fragment, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { GuestGuard, AuthGuard } from './layouts/guards';
+import Dashboard from './layouts/Dashboard';
 import Redirect from './components/Redirect';
 import LoadingScreen from './components/Loading';
 
@@ -44,18 +45,19 @@ export const routes = [
   {
     exact: true,
     path: '/404',
+    layout: Dashboard,
     component: () => <Redirect to="/" />,
   },
   {
     exact: true,
     path: '/',
+    layout: Dashboard,
     guard: AuthGuard,
     component: lazy(() => import('./pages/Home')),
   },
   {
     exact: true,
     path: '/login',
-    guard: GuestGuard,
     component: lazy(() => import('./pages/Auth/Login')),
   },
   {

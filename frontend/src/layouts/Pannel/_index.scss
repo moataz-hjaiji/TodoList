@@ -1,0 +1,20 @@
+.pannel {
+  display: flex;
+  .sidebar {
+    background: #1c1d22;
+    width: 98px;
+    align-items: center;
+    gap: 2.8rem;
+    padding: 1.8rem;
+    .section-dashboard {
+      gap: 2rem;
+      .section-dashboard-icon {
+        width: 1.8rem;
+        &:nth-child(1) {
+          filter: invert(65%) sepia(7%) saturate(102%) hue-rotate(201deg)
+            brightness(86%) contrast(89%);
+        }
+      }
+    }
+  }
+}

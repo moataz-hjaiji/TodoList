@@ -37,7 +37,7 @@ const reducer = (state: JWTState, action: PayloadAction<JWTState>) => {
   switch (action.type) {
     case 'INITIALISE': {
       const { isAuthenticated, user } = action.payload;
-
+console.log({user});
       return {
         ...state,
         isAuthenticated,
@@ -97,8 +97,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email,
       password,
     });
-    const user = response.data;
-    const token = response.token;
+    const { token } = response.data;
+    const user = response.data.data;
     setSession(token);
     dispatch({
       type: 'LOGIN',
@@ -145,9 +145,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         if (token && isValidToken(token)) {
           setSession(token);
-          const response = await axios.get('/profile/my');
-          const user = response.data.data;
-
+          const response = await axios.get(
+            'http://127.0.0.1:8000/api/v1/getMe'
+          );
+          const user = response.data.user;
           dispatch({
             type: 'INITIALISE',
             payload: {

@@ -1,6 +1,5 @@
 import asyncHandler from './../helpers/asyncHandler';
 import tasksRepo from './../db/repository/tasks';
-import { ProtectRequest } from 'app-request';
 
 export const getAlltasks = asyncHandler(async (req, res) => {
   const tasks = await tasksRepo.getAllTasks();

@@ -9,6 +9,7 @@
     padding: 0;
     font-style: normal;
     color: #2f2f2f;
+    font-family: 'Exo 2', sans-serif;
   }
 
   input,
@@ -28,7 +29,7 @@
     list-style: none;
   }
 }
-.flex-column{
+.flex-column {
   display: flex;
   flex-direction: column;
 }

@@ -1,10 +1,7 @@
-
-type Props = {}
+type Props = {};
 
 const index = (props: Props) => {
-  return (
-   <>Home</>
-  )
-}
+  return <>Home</>;
+};
 
-export default index
+export default index;

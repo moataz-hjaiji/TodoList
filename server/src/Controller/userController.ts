@@ -1,5 +1,7 @@
 import asyncHandler from './../helpers/asyncHandler';
 import UserRepo from '../db/repository/user';
+import { ProtectRequest } from './../types/app-request';
+import { Response } from 'express';
 
 export const getUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
@@ -24,4 +26,11 @@ export const createUser = asyncHandler(async (req, res) => {
     status: 'success',
     data: { newUser },
   });
+});
+export const getMe = asyncHandler(async (req: any, res: Response) => {
+  const { id } = req.user;
+
+  const user = await UserRepo.findById(id);
+  //console.log({ email, id, name });
+  res.status(200).json({ data: { user } });
 });

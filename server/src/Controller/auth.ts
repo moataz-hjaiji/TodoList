@@ -50,11 +50,9 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
       message: 'Invalid credentials',
     });
   }
-  const token = jwt.sign(
-    { id: user._id },
-    'THIS_is_0321654016545646532_VERY_strong_KEY' as string,
-    { expiresIn: '2d' }
-  );
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
+    expiresIn: '2d',
+  });
   req.user = user;
   res.status(200).json({
     status: 'success',

@@ -1,0 +1,39 @@
+.category-navbar {
+  gap: 1rem;
+  text-transform: capitalize;
+  .category-title-showMore {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .category-title {
+      color: rgba(28, 29, 34, 0.5);
+      font-weight: 400;
+      font-size: 21px;
+      &.gray-color {
+        color: rgba(28, 29, 34, 1);
+      }
+    }
+  }
+  .category-sub-categories {
+    border-left: 2px solid rgba(28, 29, 34, 0.1);
+    padding-left: 1.5rem;
+
+    gap: 1rem;
+    .sub-category-title {
+      font-weight: 600;
+      font-size: 16px;
+      position: relative;
+      padding-left: 1.5rem;
+      color: rgba(28, 29, 34, 0.5);
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -24px;
+        width: 23px;
+        height: 0px;
+        border: 1px solid rgba(28, 29, 34, 0.1);
+      }
+    }
+  }
+}
